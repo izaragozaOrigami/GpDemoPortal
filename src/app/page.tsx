@@ -1,65 +1,97 @@
-import Image from "next/image";
+import Link from "next/link";
+import { apps, statusStyles } from "@/lib/apps";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <main className="flex-1">
+        <section
+          className="relative min-h-screen bg-slate-950 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/bg-login.png')" }}
+        >
+          <div aria-hidden className="absolute inset-0 bg-slate-950/70" />
+          <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-400">
+                Aplicaciones
+              </p>
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+                Selecciona una aplicación para ver el preview interactivo.
+              </h1>
+              <p className="mt-4 text-slate-200">
+                Productos móviles para la operación de flotilla. Haz clic
+                en una tarjeta para abrir la app embebida y consultar su ficha
+                técnica.
+              </p>
+            </div>
+
+            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {apps.filter((app) => !app.hidden).map((app) => {
+                const badge = statusStyles[app.status];
+                const disabled = !app.embedUrl;
+                const hasImage = !!app.cardImage;
+
+                return (
+                  <li key={app.slug}>
+                    <Link
+                      href={`/apps/${app.slug}`}
+                      aria-disabled={disabled || undefined}
+                      className="group relative flex h-[460px] flex-col items-stretch justify-between overflow-hidden rounded-2xl border-2 border-slate-900 bg-slate-900 p-6 transition hover:-translate-y-1 hover:border-orange-500 hover:shadow-[0_24px_48px_-24px_rgba(245,130,32,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                      style={
+                        hasImage
+                          ? {
+                              backgroundImage: `url('${app.cardImage}')`,
+                              backgroundSize: "cover",
+                              backgroundPosition: "center",
+                            }
+                          : undefined
+                      }
+                    >
+                      <div
+                        aria-hidden
+                        className={
+                          hasImage
+                            ? "absolute inset-0 bg-gradient-to-b from-slate-950/55 via-slate-950/65 to-slate-950/85 transition group-hover:from-slate-950/45 group-hover:via-slate-950/55 group-hover:to-slate-950/80"
+                            : "absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950"
+                        }
+                      />
+
+                      <div className="relative flex items-start justify-between">
+                        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">
+                          App {app.index}
+                        </span>
+                        <span
+                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${badge.className}`}
+                        >
+                          {badge.label}
+                        </span>
+                      </div>
+
+                      <div className="relative flex flex-1 flex-col items-center justify-center text-center">
+                        <p className="text-sm font-medium uppercase tracking-widest text-orange-300">
+                          aplicación
+                        </p>
+                        <p className="mt-2 text-3xl font-semibold tracking-tight text-white drop-shadow">
+                          {app.name.toLowerCase()}
+                        </p>
+                        <p className="mt-4 max-w-xs text-sm text-slate-200">
+                          {app.tagline}
+                        </p>
+                      </div>
+
+                      <div className="relative flex items-center justify-end border-t border-white/15 pt-4 text-sm">
+                        <span className="font-medium text-white transition group-hover:text-orange-300">
+                          Abrir →
+                        </span>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
       </main>
-    </div>
+    </>
   );
 }
