@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { apps, statusStyles } from "@/lib/apps";
+import { asset } from "@/lib/asset";
 
 export default function Home() {
   return (
@@ -7,7 +8,7 @@ export default function Home() {
       <main className="flex-1">
         <section
           className="relative min-h-screen bg-slate-950 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/bg-login.png')" }}
+          style={{ backgroundImage: `url('${asset("/bg-login.png")}')` }}
         >
           <div aria-hidden className="absolute inset-0 bg-slate-950/70" />
           <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">

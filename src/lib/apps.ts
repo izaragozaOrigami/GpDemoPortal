@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 export type AppStatus = "produccion" | "diseno" | "pendiente";
 
 export type AppDefinition = {
@@ -77,7 +79,7 @@ export const apps: AppDefinition[] = [
       },
     ],
     embedUrl: "https://astounding-sopapillas-b99b4f.netlify.app/",
-    cardImage: "/background-checklist-card.jpg",
+    cardImage: asset("/background-checklist-card.jpg"),
   },
   {
     slug: "neumaticos",
@@ -115,7 +117,7 @@ export const apps: AppDefinition[] = [
       },
     ],
     embedUrl: "https://phenomenal-dodol-58babd.netlify.app/",
-    cardImage: "/background-neumaticos-card.jpg",
+    cardImage: asset("/background-neumaticos-card.jpg"),
   },
 ];
 
