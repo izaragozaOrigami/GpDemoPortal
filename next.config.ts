@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
   // (Azure App Service Node, not static IIS). The marketing pages still render
   // fine; they're just served by the Node server instead of as flat HTML.
   basePath,
+  // Build autocontenido para desplegar como app Node (genera .next/standalone).
+  output: "standalone",
   // Oculta el botón flotante de herramientas de desarrollo de Next ("N").
   // (De todos modos no aparece en producción.)
   devIndicators: false,
