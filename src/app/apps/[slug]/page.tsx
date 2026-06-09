@@ -1,18 +1,20 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import PhoneFrame from "@/components/PhoneFrame";
 import CorreosPlaceholder from "@/components/CorreosPlaceholder";
-import { apps, getApp, statusStyles } from "@/lib/apps";
+import { getApp, statusStyles } from "@/lib/apps";
+import { getSessionUserId } from "@/lib/buzon/auth";
 
-export function generateStaticParams() {
-  return apps.map((a) => ({ slug: a.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function AppDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const userId = await getSessionUserId();
+  if (!userId) redirect("/login");
+
   const { slug } = await params;
   const app = getApp(slug);
   if (!app) notFound();
