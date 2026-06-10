@@ -61,6 +61,9 @@ export const Ico = {
   mailOpen: (p?: IcoProps) => (
     <svg viewBox="0 0 24 24" width={sz(p)} height={sz(p)} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10.5 12 4l9 6.5" /><path d="M3 10.5V19a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-8.5" /><path d="m3 10.5 9 6 9-6" /></svg>
   ),
+  refresh: (p?: IcoProps) => (
+    <svg viewBox="0 0 24 24" width={sz(p)} height={sz(p)} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M20 11a8 8 0 1 0-.6 4" /><path d="M20 4v6h-6" /></svg>
+  ),
   logout: (p?: IcoProps) => (
     <svg viewBox="0 0 24 24" width={sz(p)} height={sz(p)} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3" /><path d="M10 8l-4 4 4 4M6 12h11" /></svg>
   ),

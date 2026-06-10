@@ -131,6 +131,8 @@
 }
 .bz-search input{ background:transparent; border:none; outline:none; color:var(--text); font-family:var(--font-body); font-size:13px; width:100%; }
 .bz-search input::placeholder{ color:var(--text-faint); }
+.bz-spin{ display:inline-flex; animation: bz-spin .8s linear infinite; }
+@keyframes bz-spin{ to{ transform: rotate(360deg); } }
 
 /* Lista */
 .bz-list{ flex:1; overflow-y:auto; padding:6px; }

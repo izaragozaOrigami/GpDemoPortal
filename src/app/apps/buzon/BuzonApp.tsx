@@ -27,32 +27,50 @@ export default function BuzonApp({ user }: { user: SessionUser }) {
   const [detail, setDetail] = useState<DemoEmailDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const detailCache = useRef<Record<string, DemoEmailDetail>>({});
 
-  const loadList = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const r = await fetch(asset("/api/demo/mailbox"), {
-        credentials: "include",
-        cache: "no-store",
-      });
-      if (r.status === 401) {
-        router.push("/login");
-        return;
+  // silent=true: refresco en segundo plano (sin spinner ni borrar la vista).
+  const loadList = useCallback(
+    async (silent = false) => {
+      if (!silent) {
+        setLoading(true);
+        setError(null);
       }
-      if (!r.ok) throw new Error("bad status");
-      const data = await r.json();
-      setEmails((data.emails ?? []) as DemoEmail[]);
-    } catch {
-      setError("No se pudo cargar el buzón. Intenta de nuevo.");
-    } finally {
-      setLoading(false);
-    }
-  }, [router]);
+      try {
+        const r = await fetch(asset("/api/demo/mailbox"), {
+          credentials: "include",
+          cache: "no-store",
+        });
+        if (r.status === 401) {
+          router.push("/login");
+          return;
+        }
+        if (!r.ok) throw new Error("bad status");
+        const data = await r.json();
+        setEmails((data.emails ?? []) as DemoEmail[]);
+        setError(null);
+      } catch {
+        if (!silent) setError("No se pudo cargar el buzón. Intenta de nuevo.");
+      } finally {
+        if (!silent) setLoading(false);
+      }
+    },
+    [router]
+  );
 
   useEffect(() => {
     loadList();
+  }, [loadList]);
+
+  // Auto-actualización: consulta el buzón cada 15 s (en silencio) para que los
+  // correos nuevos aparezcan solos, sin tener que refrescar la página.
+  useEffect(() => {
+    const iv = setInterval(() => {
+      if (typeof document !== "undefined" && document.hidden) return;
+      loadList(true);
+    }, 15000);
+    return () => clearInterval(iv);
   }, [loadList]);
 
   const unreadByFolder = useMemo(() => {
@@ -153,6 +171,12 @@ export default function BuzonApp({ user }: { user: SessionUser }) {
     [callAction, loadList]
   );
 
+  const manualRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadList(true);
+    setRefreshing(false);
+  }, [loadList]);
+
   const pickFolder = useCallback((f: FolderId) => {
     setFolder(f);
     setSelId(null);
@@ -205,9 +229,15 @@ export default function BuzonApp({ user }: { user: SessionUser }) {
                   : `${list.length} correo${list.length !== 1 ? "s" : ""}${folderUnread > 0 ? ` · ${folderUnread} sin leer` : ""}`}
               </div>
             </div>
-            <div className="bz-search hide-xs">
-              {Ico.search({ s: 16 })}<input placeholder="Buscar" disabled />
-            </div>
+            <button
+              className="bz-iconbtn"
+              onClick={manualRefresh}
+              disabled={refreshing}
+              title="Actualizar"
+              aria-label="Actualizar bandeja"
+            >
+              <span className={refreshing ? "bz-spin" : undefined}>{Ico.refresh({ s: 18 })}</span>
+            </button>
           </div>
           <div className="bz-list gp-scroll">
             {error ? (
