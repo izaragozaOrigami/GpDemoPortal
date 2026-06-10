@@ -41,7 +41,7 @@ export default function LoginPage() {
       <div className="login-bg">
         <div
           className="login-bg-photo"
-          style={{ backgroundImage: `url('${asset("/bg-login.png")}')` }}
+          style={{ backgroundImage: `url('${asset("/background-login.webp")}')` }}
         />
         <div className="login-bg-fallback" />
         <div className="login-scrim" />

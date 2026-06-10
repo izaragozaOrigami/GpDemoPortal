@@ -128,6 +128,7 @@ export const apps: AppDefinition[] = [
     tagline: "Bandeja de entrada simulada de la sesión demo.",
     status: "produccion",
     route: "/apps/buzon",
+    cardImage: asset("/background-correo.webp"),
     description:
       "Bandeja de entrada simulada que muestra, por sesión demo, los correos generados por los flujos de la plataforma (cotizaciones, mantenimiento, reportes). Cada usuario ve únicamente sus propios correos, organizados por proceso de negocio.",
     features: [

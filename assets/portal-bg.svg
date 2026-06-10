@@ -1,0 +1,85 @@
+<svg width="2000" height="1400" viewBox="0 0 2000 1400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="2000" y2="1400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a1224"/>
+      <stop offset="0.5" stop-color="#0c1730"/>
+      <stop offset="1" stop-color="#070c18"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0.78" cy="0.18" r="0.5">
+      <stop offset="0" stop-color="#f58220" stop-opacity="0.34"/>
+      <stop offset="0.5" stop-color="#f58220" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#f58220" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.12" cy="0.85" r="0.55">
+      <stop offset="0" stop-color="#1f7ae0" stop-opacity="0.22"/>
+      <stop offset="0.55" stop-color="#1f7ae0" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#1f7ae0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9b3d"/>
+      <stop offset="1" stop-color="#f58220"/>
+    </linearGradient>
+    <pattern id="dots" width="56" height="56" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.1" fill="#5a7099" fill-opacity="0.16"/>
+    </pattern>
+    <!-- Difumina los bordes del contenido para que el centro respire -->
+    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.45"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="2000" height="1400" fill="url(#base)"/>
+  <!-- Malla de puntos -->
+  <rect width="2000" height="1400" fill="url(#dots)"/>
+  <!-- Glows -->
+  <rect width="2000" height="1400" fill="url(#glowA)"/>
+  <rect width="2000" height="1400" fill="url(#glowB)"/>
+
+  <!-- Red de nodos conectados (flota / activos) -->
+  <g opacity="0.5">
+    <g stroke="#4a6291" stroke-width="1.6" stroke-opacity="0.5" fill="none">
+      <path d="M210 320 L520 470 L760 360 L1040 540 L1360 410"/>
+      <path d="M520 470 L600 780 L900 880 L1180 760 L1040 540"/>
+      <path d="M1360 410 L1620 600 L1500 920 L1180 760"/>
+      <path d="M600 780 L360 1010 L720 1120 L900 880"/>
+      <path d="M1500 920 L1760 1080"/>
+    </g>
+    <g>
+      <!-- nodos normales -->
+      <g fill="#7d93bd">
+        <circle cx="520" cy="470" r="6"/>
+        <circle cx="760" cy="360" r="5"/>
+        <circle cx="1040" cy="540" r="6"/>
+        <circle cx="600" cy="780" r="6"/>
+        <circle cx="900" cy="880" r="5"/>
+        <circle cx="1180" cy="760" r="6"/>
+        <circle cx="1620" cy="600" r="5"/>
+        <circle cx="360" cy="1010" r="5"/>
+        <circle cx="720" cy="1120" r="5"/>
+        <circle cx="210" cy="320" r="4"/>
+        <circle cx="1760" cy="1080" r="4"/>
+      </g>
+      <!-- nodos activos (naranja, con halo) -->
+      <g>
+        <circle cx="1360" cy="410" r="16" fill="#f58220" fill-opacity="0.18"/>
+        <circle cx="1360" cy="410" r="8" fill="url(#orange)"/>
+        <circle cx="1500" cy="920" r="16" fill="#f58220" fill-opacity="0.18"/>
+        <circle cx="1500" cy="920" r="8" fill="url(#orange)"/>
+        <circle cx="900" cy="880" r="14" fill="#f58220" fill-opacity="0.16"/>
+        <circle cx="900" cy="880" r="7" fill="url(#orange)"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Trazos de movimiento sutiles -->
+  <g stroke="url(#orange)" stroke-width="2" stroke-opacity="0.18" stroke-linecap="round">
+    <line x1="120" y1="160" x2="320" y2="120"/>
+    <line x1="1720" y1="320" x2="1900" y2="270"/>
+    <line x1="1500" y1="1220" x2="1700" y2="1180"/>
+  </g>
+
+  <!-- Viñeta -->
+  <rect width="2000" height="1400" fill="url(#vignette)"/>
+</svg>

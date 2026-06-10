@@ -17,7 +17,7 @@ export default async function Home() {
       <main className="flex-1">
         <section
           className="relative min-h-screen bg-slate-950 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('${asset("/bg-login.png")}')` }}
+          style={{ backgroundImage: `url('${asset("/background-portal.webp")}')` }}
         >
           <div aria-hidden className="absolute inset-0 bg-slate-950/70" />
           <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">

@@ -1,0 +1,73 @@
+<svg width="1000" height="1300" viewBox="0 0 1000 1300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a1120"/>
+      <stop offset="0.5" stop-color="#0e1a30"/>
+      <stop offset="1" stop-color="#080d18"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.74" r="0.6">
+      <stop offset="0" stop-color="#f58220" stop-opacity="0.28"/>
+      <stop offset="0.5" stop-color="#f58220" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#f58220" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="env1" x1="0" y1="700" x2="0" y2="1300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a2942"/>
+      <stop offset="1" stop-color="#101d33"/>
+    </linearGradient>
+    <linearGradient id="env2" x1="0" y1="760" x2="0" y2="1300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#15233b"/>
+      <stop offset="1" stop-color="#0c1729"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff9b3d"/>
+      <stop offset="1" stop-color="#f58220"/>
+    </linearGradient>
+    <!-- Máscara: el motivo se desvanece hacia arriba para no chocar con el título -->
+    <linearGradient id="fadeGrad" x1="0" y1="560" x2="0" y2="1040" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="1"/>
+    </linearGradient>
+    <mask id="fade">
+      <rect width="1000" height="1300" fill="url(#fadeGrad)"/>
+    </mask>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="1000" height="1300" fill="url(#bg)"/>
+  <rect width="1000" height="1300" fill="url(#glow)"/>
+
+  <!-- Partículas suaves -->
+  <g fill="#ffffff" opacity="0.05">
+    <circle cx="150" cy="180" r="4"/>
+    <circle cx="870" cy="240" r="5"/>
+    <circle cx="120" cy="520" r="4"/>
+    <circle cx="900" cy="560" r="4"/>
+  </g>
+
+  <!-- Stack de sobres (mitad inferior, difuminado hacia arriba) -->
+  <g mask="url(#fade)">
+    <!-- Sobre trasero izquierdo -->
+    <g transform="rotate(-7 300 1050)">
+      <rect x="60" y="800" width="440" height="420" rx="26" fill="url(#env2)" stroke="#27395a" stroke-width="2"/>
+      <path d="M78 818 L280 980 L482 818" fill="none" stroke="#34496e" stroke-width="3"/>
+    </g>
+    <!-- Sobre trasero derecho -->
+    <g transform="rotate(8 720 1080)">
+      <rect x="540" y="840" width="430" height="420" rx="26" fill="url(#env2)" stroke="#27395a" stroke-width="2"/>
+      <path d="M558 858 L755 1016 L952 858" fill="none" stroke="#34496e" stroke-width="3"/>
+    </g>
+    <!-- Sobre frontal (centrado-bajo, con acento naranja) -->
+    <g transform="translate(0 40)">
+      <rect x="250" y="860" width="500" height="440" rx="30" fill="url(#env1)" stroke="#3a517a" stroke-width="2"/>
+      <path d="M264 876 L500 1058 L736 876" fill="none" stroke="#3f567f" stroke-width="3"/>
+      <path d="M264 872 L500 1050 L736 872" fill="none" stroke="url(#orange)" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+    </g>
+  </g>
+
+  <!-- Insignia de notificación, abajo-derecha (fuera del centro/título) -->
+  <g>
+    <circle cx="724" cy="900" r="46" fill="url(#orange)"/>
+    <text x="724" y="917" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+  </g>
+</svg>
