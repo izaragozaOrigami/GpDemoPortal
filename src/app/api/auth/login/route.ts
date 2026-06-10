@@ -55,6 +55,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // El acceso "demo" (abrir sesión SIN validar contra el userservice) jamás
+  // debe quedar habilitado en producción: permitiría entrar sin credenciales
+  // reales. Por defecto sólo se activa fuera de producción. Para una demo
+  // pública en prod hay que habilitarlo EXPLÍCITAMENTE con ALLOW_DEMO_LOGIN=true.
+  const allowDemoLogin =
+    process.env.ALLOW_DEMO_LOGIN === "true" ||
+    process.env.NODE_ENV !== "production";
+
   const userserviceUrl = process.env.USERSERVICE_URL;
 
   // --- MODO REAL: contra Origami.Identity ---
@@ -93,12 +101,27 @@ export async function POST(req: NextRequest) {
         { status: 401 }
       );
     } catch {
-      // Sólo si el servicio es INALCANZABLE (red/DNS/timeout) caemos al DEV.
+      // userservice INALCANZABLE (red/DNS/timeout).
+      if (!allowDemoLogin) {
+        // En producción fallamos CERRADO: no abrimos sesión sin validar.
+        return NextResponse.json(
+          { error: "Servicio de autenticación no disponible. Intenta más tarde." },
+          { status: 503 }
+        );
+      }
       console.warn("[login] userservice inalcanzable; usando fallback DEV");
     }
   }
 
   // --- MODO DEV / fallback: sin userservice o servicio caído ---
+  // Cerrado en producción salvo ALLOW_DEMO_LOGIN explícito: nunca se entra
+  // sin pasar por el userservice real.
+  if (!allowDemoLogin) {
+    return NextResponse.json(
+      { error: "Usuario o contraseña incorrectos" },
+      { status: 401 }
+    );
+  }
   const devUid = process.env.DEMO_USER_ID;
   if (!devUid) {
     return NextResponse.json(
