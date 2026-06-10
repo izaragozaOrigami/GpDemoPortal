@@ -13,6 +13,8 @@ export type AppDefinition = {
   embedUrl?: string;
   cardImage?: string;
   hidden?: boolean;
+  /** Ruta nativa dentro del portal (módulos no embebidos por iframe, ej. Buzón). */
+  route?: string;
 };
 
 export const apps: AppDefinition[] = [
@@ -118,6 +120,33 @@ export const apps: AppDefinition[] = [
     ],
     embedUrl: "https://phenomenal-dodol-58babd.netlify.app/",
     cardImage: asset("/background-neumaticos-card.jpg"),
+  },
+  {
+    slug: "buzon",
+    index: "01",
+    name: "Buzón",
+    tagline: "Bandeja de entrada simulada de la sesión demo.",
+    status: "produccion",
+    route: "/apps/buzon",
+    description:
+      "Bandeja de entrada simulada que muestra, por sesión demo, los correos generados por los flujos de la plataforma (cotizaciones, mantenimiento, reportes). Cada usuario ve únicamente sus propios correos, organizados por proceso de negocio.",
+    features: [
+      {
+        title: "Correos por sesión",
+        detail:
+          "Cada usuario demo ve solo los correos generados por su actividad, aislados del resto.",
+      },
+      {
+        title: "Carpetas por flujo",
+        detail:
+          "Refacciones/Compras, Mantenimiento Externo, Reporte de bajas y Otros.",
+      },
+      {
+        title: "Lectura completa",
+        detail:
+          "Vista de bandeja con lista y panel de lectura del correo seleccionado.",
+      },
+    ],
   },
 ];
 

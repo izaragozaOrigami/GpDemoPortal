@@ -1,10 +1,19 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { apps, statusStyles } from "@/lib/apps";
 import { asset } from "@/lib/asset";
+import { getSessionUser } from "@/lib/buzon/auth";
+import PortalHeader from "@/components/PortalHeader";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const user = await getSessionUser();
+  if (!user) redirect("/login");
+
   return (
     <>
+      <PortalHeader user={user} />
       <main className="flex-1">
         <section
           className="relative min-h-screen bg-slate-950 bg-cover bg-center bg-no-repeat"
@@ -27,15 +36,19 @@ export default function Home() {
             </div>
 
             <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {apps.filter((app) => !app.hidden).map((app) => {
+              {apps
+                .filter((app) => !app.hidden)
+                .sort((a, b) => a.index.localeCompare(b.index))
+                .map((app) => {
                 const badge = statusStyles[app.status];
-                const disabled = !app.embedUrl;
+                const href = app.route ?? `/apps/${app.slug}`;
+                const disabled = !app.embedUrl && !app.route;
                 const hasImage = !!app.cardImage;
 
                 return (
                   <li key={app.slug}>
                     <Link
-                      href={`/apps/${app.slug}`}
+                      href={href}
                       aria-disabled={disabled || undefined}
                       className="group relative flex h-[460px] flex-col items-stretch justify-between overflow-hidden rounded-2xl border-2 border-slate-900 bg-slate-900 p-6 transition hover:-translate-y-1 hover:border-orange-500 hover:shadow-[0_24px_48px_-24px_rgba(245,130,32,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
                       style={

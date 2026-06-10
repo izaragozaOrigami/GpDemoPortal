@@ -1,0 +1,196 @@
+/* ============================================================
+   GP Fleet — Design System (extraído del diseño de Claude Design)
+   Fuentes (Inter + Montserrat) se cargan vía next/font en layout.tsx
+   y se exponen como --font-inter / --font-montserrat.
+   ============================================================ */
+
+:root{
+  /* Marca */
+  --gp-orange:        #FF8B00;
+  --gp-orange-600:    #E67D00;
+  --gp-orange-700:    #CC6F00;
+  --gp-orange-soft:   rgba(255,139,0,.12);
+  --gp-orange-line:   rgba(255,139,0,.30);
+
+  /* Tema oscuro (dashboard) */
+  --bg-900:   #0A0C16;   /* fondo página, más oscuro */
+  --bg-850:   #0D0F1A;
+  --surface-800: #14161F; /* tarjetas / paneles */
+  --surface-750: #181B26;
+  --surface-700: #1F222E; /* hover / seleccionado */
+  --surface-650: #262A38;
+
+  --border:        rgba(255,255,255,.07);
+  --border-strong: rgba(255,255,255,.13);
+
+  --text:        #F4F5F7;
+  --text-dim:    #9AA0AE;
+  --text-faint:  #686E7C;
+
+  /* Badge "En producción" / leído */
+  --ok-text:   #88D8B8;
+  --ok-fill:   rgba(64,150,112,.16);
+  --ok-line:   rgba(96,190,142,.30);
+
+  /* Login (tema claro sobre foto) */
+  --paper:        #FFFFFF;
+  --ink:          #2C2C30;
+  --ink-label:    #5D5D5D;
+  --field-line:   #E3E3E6;
+  --field-line-focus: var(--gp-orange);
+  --placeholder:  #A6A8AD;
+
+  --radius-card: 16px;
+  --radius-field: 10px;
+  --shadow-card: 0 24px 60px -20px rgba(0,0,0,.55);
+  --shadow-soft: 0 8px 24px -10px rgba(0,0,0,.5);
+
+  --font-display: var(--font-montserrat), 'Montserrat', system-ui, sans-serif; /* marca + eyebrows */
+  --font-body: var(--font-sans), 'Inter', system-ui, sans-serif;              /* UI + cuerpo */
+}
+
+/* Scope: sólo dentro de las vistas del Buzón/Login para no pisar la home. */
+.gp-scope *{ box-sizing:border-box; }
+.gp-scope{
+  font-family: var(--font-body);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.gp-scope button{ font-family:inherit; cursor:pointer; }
+.gp-scope ::selection{ background: var(--gp-orange-soft); }
+
+/* Fondo de página tipo dashboard: navy casi negro con leve gradiente */
+.gp-page-bg{
+  background:
+    radial-gradient(1100px 700px at 12% 0%, rgba(40,46,66,.55), transparent 60%),
+    radial-gradient(900px 600px at 100% 100%, rgba(247,147,30,.05), transparent 55%),
+    linear-gradient(160deg, #1C1F2D 0%, #11131F 45%, #0A0C16 100%);
+}
+
+/* ---------- Eyebrow / labels en MAYÚSCULAS naranja ---------- */
+.gp-eyebrow{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gp-orange);
+}
+.gp-eyebrow.dim{ color: var(--text-faint); letter-spacing:.16em; }
+
+/* ---------- Badge verde "En producción" ---------- */
+.gp-badge{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family: var(--font-display);
+  font-weight:600; font-size:12px;
+  padding:5px 11px; border-radius:999px;
+  color: var(--ok-text);
+  background: var(--ok-fill);
+  border:1px solid var(--ok-line);
+  white-space:nowrap;
+}
+.gp-badge .dot{ width:6px;height:6px;border-radius:50%;background:currentColor; }
+
+/* ---------- Botón primario naranja ---------- */
+.gp-btn{
+  font-family: var(--font-display);
+  font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  font-size:14px; color:#fff;
+  background: var(--gp-orange);
+  border:none; border-radius:10px;
+  padding:14px 20px;
+  transition: background .15s ease, transform .05s ease;
+}
+.gp-btn:hover{ background: var(--gp-orange-600); }
+.gp-btn:active{ transform: translateY(1px); }
+.gp-btn:disabled{ opacity:.6; cursor:not-allowed; }
+.gp-btn.block{ width:100%; }
+
+.gp-btn-ghost{
+  font-family: var(--font-display); font-weight:600; font-size:13px;
+  color: var(--text-dim); background:transparent;
+  border:1px solid var(--border-strong); border-radius:9px;
+  padding:9px 14px; display:inline-flex; align-items:center; gap:8px;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.gp-btn-ghost:hover{ color:var(--text); border-color:var(--gp-orange-line); }
+
+/* ---------- Chips / segmentos de filtro ---------- */
+.gp-chip{
+  font-family: var(--font-display);
+  font-weight:600; font-size:13px;
+  color: var(--text-dim);
+  background: var(--surface-750);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:8px 15px;
+  display:inline-flex; align-items:center; gap:8px;
+  transition: all .15s ease;
+  white-space:nowrap;
+}
+.gp-chip:hover{ color:var(--text); border-color:var(--border-strong); }
+.gp-chip.active{
+  color:#fff; background: var(--gp-orange);
+  border-color: var(--gp-orange);
+}
+.gp-chip .count{
+  font-size:11px; font-weight:700;
+  background: rgba(0,0,0,.18); color:inherit;
+  padding:1px 7px; border-radius:999px;
+}
+.gp-chip:not(.active) .count{ background: rgba(255,255,255,.06); color:var(--text-faint); }
+
+/* ---------- Pill usuario / contador en topbar ---------- */
+.gp-userpill{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-display); font-weight:600; font-size:13px;
+  color: var(--text);
+  background: var(--surface-750);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:7px 13px 7px 9px;
+}
+.gp-userpill .ava{
+  width:24px;height:24px;border-radius:50%;
+  display:grid;place-items:center;
+  background: var(--gp-orange-soft); color:var(--gp-orange);
+}
+.gp-unread-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-display);font-weight:600;font-size:13px;
+  color:var(--text-dim);
+}
+.gp-unread-pill b{ color:var(--gp-orange); font-weight:800; }
+
+/* ---------- Adjunto descargable ---------- */
+.gp-attach{
+  display:inline-flex; align-items:center; gap:10px;
+  background: var(--surface-750);
+  border:1px solid var(--border-strong);
+  border-radius:10px; padding:10px 13px;
+  text-decoration:none; color:var(--text);
+  transition: border-color .15s, background .15s;
+  font-family: var(--font-body);
+}
+.gp-attach:hover{ border-color:var(--gp-orange-line); background:var(--surface-700); }
+.gp-attach .xls{
+  width:34px;height:34px;border-radius:8px;flex:none;
+  display:grid;place-items:center;
+  font-family:var(--font-display);font-weight:800;font-size:11px;
+  background: rgba(33,150,83,.18); color:#46c97e;
+  border:1px solid rgba(70,201,126,.3);
+}
+.gp-attach .meta b{ font-family:var(--font-display); font-size:13px; font-weight:600; display:block; }
+.gp-attach .meta span{ font-size:12px; color:var(--text-faint); }
+.gp-attach .dl{ margin-left:6px; color:var(--text-dim); }
+
+/* ---------- Scrollbars sutiles ---------- */
+.gp-scroll{ scrollbar-width:thin; scrollbar-color: rgba(255,255,255,.12) transparent; }
+.gp-scroll::-webkit-scrollbar{ width:9px; height:9px; }
+.gp-scroll::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.1); border-radius:8px; border:2px solid transparent; background-clip:padding-box; }
+.gp-scroll::-webkit-scrollbar-thumb:hover{ background:rgba(255,255,255,.18); background-clip:padding-box; }
+
+/* ---------- Utilidades ---------- */
+.u-clamp1{ display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
+.u-clamp2{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
